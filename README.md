@@ -29,8 +29,10 @@ Usage
 Once the extension is installed, simply use it in your code by  :
 
 Extend your ActiveRecord class
-```class extends \larst\vuefrontend\VueActiveRecord or
-class extends \larst\vuefrontend\VueBootstrapActiveRecord```
+```class YourClass extends \larst\vuefrontend\VueActiveRecord or
+class YourClass extends \larst\vuefrontend\VueBootstrapActiveRecord
+```
+
 
 Inserting Vue-widget around your forms
 
@@ -39,11 +41,13 @@ Inserting Vue-widget around your forms
 .... form
     larst\vuefrontend\Vue::end();
 
-    ?>```
+    ?>
+```
 
 Set the fieldclass in your form
 ```'fieldClass' => 'larst\vuefrontend\VueBootstrapActiveField' with yii2-bootstrap or
-   'fieldClass' => 'larst\vuefrontend\VueActiveField'```
+   'fieldClass' => 'larst\vuefrontend\VueActiveField'
+```
 
 and say to Vue to use the submithandler within your form
 ```'options' => ['v-on:submit' => new yii\web\JsExpression("submitHandler")]```
