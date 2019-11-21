@@ -1,0 +1,31 @@
+{
+    "name": "lars-t/yii2-vuejs-frontend",
+    "description": "Yii2 Vuejs frontend drop-in replacement, no more need for pjax",
+    "type": "yii2-extension",
+    "keywords": ["yii2", "extension", "yii2-vuejs", "vue", "vuejs"],
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "lars-t",
+            "email": "lars-t@github.com"
+        }
+    ],
+    "require": {
+        "yiisoft/yii2": "~2.0.0",
+        "bower-asset/vue": " 2.5.17",
+        "bower-asset/axios" : "*",
+        "bower-asset/toastr": "^2.1",
+        "npm-asset/vee-validate": " 2.0.9"
+    },
+    "repositories": [
+        {
+            "type": "composer",
+            "url": "https://asset-packagist.org"
+        }
+    ],
+    "autoload": {
+        "psr-4": {
+            "larst\\vuefrontend\\": "src"
+        }
+    }
+}
