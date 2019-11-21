@@ -29,14 +29,17 @@ Usage
 Once the extension is installed, simply use it in your code by  :
 
 Extend your ActiveRecord class
-```class YourClass extends \larst\vuefrontend\VueActiveRecord or
+```
+class YourClass extends \larst\vuefrontend\VueActiveRecord 
+or for yii2-bootstrap 
 class YourClass extends \larst\vuefrontend\VueBootstrapActiveRecord
 ```
 
 
 Inserting Vue-widget around your forms
 
-```<?php
+```
+<?php
     larst\vuefrontend\Vue::begin(['model'=>$model]);
 .... form
     larst\vuefrontend\Vue::end();
@@ -45,25 +48,33 @@ Inserting Vue-widget around your forms
 ```
 
 Set the fieldclass in your form
-```'fieldClass' => 'larst\vuefrontend\VueBootstrapActiveField' with yii2-bootstrap or
-   'fieldClass' => 'larst\vuefrontend\VueActiveField'
+```
+'fieldClass' => 'larst\vuefrontend\VueActiveField'
+or for yii2-bootstrap 
+'fieldClass' => 'larst\vuefrontend\VueBootstrapActiveField' 
 ```
 
-and say to Vue to use the submithandler within your form
-```'options' => ['v-on:submit' => new yii\web\JsExpression("submitHandler")]```
+and let Vue know to use the submithandler within your form
+```
+'options' => ['v-on:submit' => new yii\web\JsExpression("submitHandler")]
+```
 
-VeeValidate will be used by default. To disable VeeValidate, set in the inputOptions of your field: 'veeValidate' => false.
+VeeValidate will be used by default. 
+To disable VeeValidate, set in the inputOptions of your field: 'veeValidate' => false.
 Set enableClientValidation to false in your form, to disable jquery clientvalidation.
-All yii2-validators are converted automagically to v-validate if possible (some more work todo).
+All yii2-validators are converted automagically to v-validate if possible (still some work todo here).
 
 example yii form
-``` $form = ActiveForm::begin([
+```
+$form = ActiveForm::begin([
             'enableClientScript' => false,
             'fieldClass' => 'larst\vuefrontend\VueBootstrapActiveField',
             'options' => ['v-on:submit' => new yii\web\JsExpression("submitHandler")]
-    ]);```
+    ]);
+```
 
 In your controller
+
 ```
 if (Yii::$app->request->isVuejs) {  // when you did not implement VueRequest use: if (Yii::$app->request->headers->get('X-VUEJS', false)) { 
     $response = Yii::$app->response;
