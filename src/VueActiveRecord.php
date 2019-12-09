@@ -68,6 +68,9 @@ class VueActiveRecord extends \yii\db\ActiveRecord
                     case 'number':
                     case 'integer':
                     case 'double':
+                        if(isset($validator->numberPattern)){
+                            $rules['regexp'] = new \yii\web\JsExpression('new RegExp(' . $validator->numberPattern . ')');
+                        }
                         if (isset($validator->max)) {
                             if ($name === 'number' || $name === 'integer') {
                                 $rules['max_value'] = $validator->max;
