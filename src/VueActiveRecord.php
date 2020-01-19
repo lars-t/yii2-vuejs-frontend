@@ -69,7 +69,7 @@ class VueActiveRecord extends \yii\db\ActiveRecord
                     case 'integer':
                     case 'double':
                         if(isset($validator->numberPattern)){
-                            $rules['regexp'] = new \yii\web\JsExpression('new RegExp(' . $validator->numberPattern . ')');
+                            $rules['regex'] = new \yii\web\JsExpression('new RegExp(' . $validator->numberPattern . ')');
                         }
                         if (isset($validator->max)) {
                             if ($name === 'number' || $name === 'integer') {
@@ -87,7 +87,7 @@ class VueActiveRecord extends \yii\db\ActiveRecord
                         }
                         break;
                     case 'match':
-                        $rules['regexp'] = new \yii\web\JsExpression('new RegExp(' . $validator->pattern . ')');
+                        $rules['regex'] = new \yii\web\JsExpression('new RegExp(' . $validator->pattern . ')');
                         break;
                     case 'required':
                     case 'email':
