@@ -87,3 +87,39 @@ if (Yii::$app->request->isVuejs) {  // when you did not implement VueRequest use
     ];
 }
 ```
+
+example yii gridview
+```
+            \larst\vuefrontend\Vue::begin([
+        'jsName' => 'nameVm',
+        'data' => [
+            'model' => $dataProvider->getVueModels(),
+            'gridReload' => 0,
+            'gridMethod' => 'get',
+            'gridUrl' => yii\helpers\Url::to(['someview/index']), // dynamic url for grid
+            'gridIndex' => yii\helpers\Url::to(['someview/index']), // default url for grid
+            'summary' => $dataProvider->renderSummary(),
+        ],
+        'watch' => [
+            'gridReload' => new \yii\web\JsExpression('function(){this.gridHandler()}'),
+        ],
+    ]);
+
+            \larst\vuefrontend\VueGridView::widget([
+                'dataProvider' => $dataProvider,
+                'modelClass'=> \frontend\models\SomeModel::class,
+```
+
+In your controller for grid
+
+```
+
+if (Yii::$app->request->isVuejs) {
+            $response = Yii::$app->response;
+            $response->format = \yii\web\Response::FORMAT_JSON;
+            return [
+                'model' => $dataProvider->getVueModels(), // javascript object for model
+                'flashes' => Yii::$app->session->getAllFlashes(), // pass flashes to toastr
+
+            ];
+}
