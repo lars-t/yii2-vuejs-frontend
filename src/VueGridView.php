@@ -10,6 +10,12 @@ class VueGridView extends \yii\grid\GridView
 {
 
     /**
+     * @var string the model class which is being displayed in the grid. With Vue we need to know this in front.
+     * 
+     */
+    public $modelClass = null;
+
+    /**
      * @var string the default data column class if the class name is not explicitly specified when configuring a data column.
      * Defaults to 'larst\vuefrontend\VueDataColumn'.
      */
@@ -38,14 +44,14 @@ class VueGridView extends \yii\grid\GridView
      * @see \yii\helpers\Html::renderTagAttributes() for details on how attributes are being rendered.
      */
     public $headerRowOptions = ['@click.stop.prevent' => "getHandler"];
-    
+
     /**
      * @var array the HTML attributes for the summary of the list view.
      * The "tag" element specifies the tag name of the summary element and defaults to "div".
      * summary should be defined in  data from Vue! Its mandatory.
      * @see \yii\helpers\Html::renderTagAttributes() for details on how attributes are being rendered.
      */
-    public $summaryOptions = ['class' => 'vue-summary', 'tag'=>'grid-summary', ':summary' => 'summary'];
+    public $summaryOptions = ['class' => 'vue-summary', 'tag' => 'grid-summary', ':summary' => 'summary'];
 
     /**
      * @var array|Closure the HTML attributes for the table body rows. This can be either an array
@@ -91,6 +97,9 @@ class VueGridView extends \yii\grid\GridView
      */
     public function init()
     {
+        if($this->modelClass === null){
+            throw new InvalidConfigException('Missing modelClass');
+        }
         $view = $this->getView();
         $asset = VueGridViewAsset::register($view);
 
@@ -106,38 +115,25 @@ class VueGridView extends \yii\grid\GridView
      */
     public function renderTableBody()
     {
-        $models = array_values($this->dataProvider->getVueModels());
-        $keys = $this->dataProvider->getKeys();
-        $rows = [];
-        foreach ($models as $index => $model) {
-            $key = $keys[$index];
-            if ($this->beforeRow !== null) {
-                $row = call_user_func($this->beforeRow, $model, $key, $index, $this);
-                if (!empty($row)) {
-                    $rows[] = $row;
-                }
+        $model = new $this->modelClass;
+        if ($this->beforeRow !== null) {
+            $row = call_user_func($this->beforeRow, $model, 0, 0, $this);
+            if (!empty($row)) {
+                $rows[] = $row;
             }
-
-            $rows[] = $this->renderTableRow($model, $key, $index);
-
-            if ($this->afterRow !== null) {
-                $row = call_user_func($this->afterRow, $model, $key, $index, $this);
-                if (!empty($row)) {
-                    $rows[] = $row;
-                }
+        }
+        $rows[] = $this->renderTableRow($model->toVueArray(), 0, 0);
+        if ($this->afterRow !== null) {
+            $row = call_user_func($this->afterRow, $model, $key, 0, $this);
+            if (!empty($row)) {
+                $rows[] = $row;
             }
-            break;
         }
 
-        if (empty($rows) && $this->emptyText !== false) {
-            $colspan = count($this->columns);
+        $colspan = count($this->columns);
+        $emptyRows = "<tr v-if='model.length === 0'><td colspan=\"$colspan\">" . $this->renderEmpty() . "</td></tr>\n";
 
-            return "<tbody>\n<tr><td colspan=\"$colspan\">" . $this->renderEmpty() . "</td></tr>\n</tbody>";
-        }
-
-
-
-        return "<tbody>\n" . implode("\n", $rows) . "\n</tbody>";
+        return "<tbody>\n" . $emptyRows . implode("\n", $rows) . "\n</tbody>";
     }
 
     /**
