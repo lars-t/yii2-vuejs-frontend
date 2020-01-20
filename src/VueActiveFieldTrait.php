@@ -75,7 +75,7 @@ trait VueActiveFieldTrait
             $this->enableClientValidation = false; // disable jQuery
             $validators = $this->model->fieldVeeValidators($this->attribute);
             $options = array_merge(['data-vv-as' => $this->model->getAttributeLabel($this->attribute)], $options);
-            if (count(\yii\helpers\Json::decode($validators)) > 0) {
+            if (count($this->model->getActiveValidators($this->attribute)) > 0) {
                 $options = array_merge(['v-validate' => $validators], $options);
             }
         }
