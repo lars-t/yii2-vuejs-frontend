@@ -489,7 +489,7 @@ function(event){
                             ;
                     }
                 });
-                if(response.data.model.errorSummary && response.data.model.errorSummary.length > 0){
+                if(response.data.model !== undefined && response.data.model.errorSummary && response.data.model.errorSummary.length > 0){
                     if(typeof vm.toastr === 'function'){
                         vm.toastr( response.data.model.errorSummary.join('<br>'), '', 'error');
                     }
