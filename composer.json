@@ -14,8 +14,9 @@
         "yiisoft/yii2": "~2.0.0",
         "bower-asset/vue": " 2.5.17",
         "bower-asset/axios" : "*",
-        "bower-asset/toastr": "^2.1",
-        "npm-asset/vee-validate": " 2.0.9"
+        "bower-asset/toastr": " dev-master",
+        "npm-asset/vee-validate": " 2.0.9",
+        "yiisoft/yii2-composer": " ^2.0"
     },
     "repositories": [
         {
