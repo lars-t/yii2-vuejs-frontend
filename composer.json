@@ -12,7 +12,7 @@
     ],
     "require": {
         "yiisoft/yii2": "~2.0.0",
-        "bower-asset/vue": " 2.5.17",
+        "bower-asset/vue": " 2.6.14",
         "bower-asset/axios" : "*",
         "npm-asset/vee-validate": " 2.0.9",
         "yiisoft/yii2-composer": " ^2.0"
@@ -26,6 +26,11 @@
     "autoload": {
         "psr-4": {
             "larst\\vuefrontend\\": "src"
+        }
+    },
+    "config": {
+        "allow-plugins": {
+            "yiisoft/yii2-composer": true
         }
     }
 }
