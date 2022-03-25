@@ -30,6 +30,11 @@ class Vue extends Widget
     public $template;
 
     /**
+     * @var string html contents for widget()
+     */
+    public $html4widget;
+
+    /**
      * 'methods' => [
      *  'reverseMessage' => new yii\web\JsExpression("function(){"
      *      . "this.message =1; "
@@ -600,6 +605,9 @@ JS
             }); 
         ";
         Yii::$app->view->registerJs($js, View::POS_END);
+        if(!empty($this->html4widget)){
+            return $this->html4widget;
+        }
     }
 
     public function generateMethods()
